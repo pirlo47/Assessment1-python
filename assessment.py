@@ -1,5 +1,3 @@
-# assessment.py
-
 class StringProcessor:
     def reverse_words_in_sentence(self, sentence: str) -> str:
         """
