@@ -20,7 +20,13 @@ class StringProcessor:
         - "" (empty string) should become ""
         - "  " (only spaces) should become "  "
         """
-        pass
+        # Split the sentence into words and spaces
+        words = sentence.split(' ')
+        # Reverse each word and keep the same structure
+        reversed_words = [word[::-1] for word in words]
+        # Join back with the original spacing
+        return ' '.join(reversed_words)
+        
 
 class NumberCruncher:
     def process_numbers(self, numbers: list[int]) -> dict[str, int]:
@@ -45,7 +51,20 @@ class NumberCruncher:
         - [] (empty list) should return {"sum_of_evens": 0, "product_of_odds": 1}
         - [-2, -3, -4, 5] should return {"sum_of_evens": -6, "product_of_odds": -15}
         """
-        pass
+        sum_of_evens = 0 
+        product_of_odds = 1
+
+        for number in numbers:
+            if number % 2 == 0:
+                sum_of_evens += number; 
+            else:
+                product_of_odds *= number; 
+        if numbers == []:
+            return {"sum_of_evens": 0, "product_of_odds": 1}
+        else:
+            return{"sum_of_evens": sum_of_evens, "product_of_odds": product_of_odds}
+
+        
 
 class LogicValidator:
     def check_discount_eligibility(self, age: int, is_member: bool, has_coupon: bool) -> str:
@@ -67,7 +86,22 @@ class LogicValidator:
         Return the string representing the determined discount type.
         Assume age will be a non-negative integer.
         """
-        pass
+        if age < 0:
+            return ValueError, "age cannot be negative"; 
+        if age >= 65:
+            return "Senior Discount"
+        elif age < 18:
+            return "Student Discount"
+        elif age >= 18 and age <= 64:
+            if is_member and has_coupon:
+                return "Member Coupon Discount" 
+            elif is_member:
+                return "Member Discount"
+            elif has_coupon:
+                return "Coupon Discount"
+            else:
+                return "No Discount"
+
 
 class PasswordValidatorTDD:
     # NOTE TO STUDENT: For this class, you must first write the unit tests in
@@ -90,4 +124,19 @@ class PasswordValidatorTDD:
         You should implement this method *after* writing comprehensive unit tests
         for it in the test_assessment.py file.
         """
+        import re; 
+        import string; 
+
+        if len(password) < 8:
+            return False
+        if  re.search('A - Z', password):
+            return True
+        elif  re.search('a - z', password):
+            return True
+        elif re.search('0 - 9', password):
+            return True
+        elif re.search( '[' + string.punctuation + ']', password):
+            return True
+        return False
+        
         pass
